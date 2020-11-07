@@ -68,7 +68,7 @@ const createNewBlock = (data: string): Block => {
     data,
     newTimestamp
   );
-
+  addBlock(newBlock); // blockchain에 추가!
   return newBlock;
 };
 
@@ -101,3 +101,10 @@ const addBlock = (candidateBlock: Block): void => {
     blockchain.push(candidateBlock); // true라면 블록체인에 추가 시킨다.
   }
 };
+
+// 블록을 만들어보자!
+createNewBlock('second block');
+createNewBlock('third block');
+createNewBlock('fourth block');
+
+console.log(blockchain);
