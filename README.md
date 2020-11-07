@@ -20,3 +20,6 @@ yarn add -D ts-watch
     "start": "tsc-watch --onSuccess \" node dist/index.js\" "
 }
 ```
+
+## 구현하는 블록체인 설명.
+![image](https://user-images.githubusercontent.com/56942649/98441461-c82e4b00-2141-11eb-949c-a99f632a23b4.png)
