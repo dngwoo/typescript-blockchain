@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "ES2015", // 어떤 버전으로 컴파일 되기 원하는지.
+        "sourceMap": true,
+    },
+    "include": [ // 어떤 파일을 컴파일 할지.
+        "index.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
