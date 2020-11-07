@@ -72,6 +72,14 @@ const createNewBlock = (data: string): Block => {
   return newBlock;
 };
 
+const getHashforBlock = (aBlock: Block): string =>
+  Block.calculateBlockHash(
+    aBlock.index,
+    aBlock.previousHash,
+    aBlock.timestamp,
+    aBlock.data
+  );
+
 const isBlockValid = (candidateBlock: Block, previousBlock: Block): boolean => {
   if (!Block.validateStructure(candidateBlock)) {
     return false;
@@ -79,5 +87,17 @@ const isBlockValid = (candidateBlock: Block, previousBlock: Block): boolean => {
     return false;
   } else if (previousBlock.hash !== candidateBlock.previousHash) {
     return false;
+  } else if (getHashforBlock(candidateBlock) !== candidateBlock.hash) {
+    // 우리가 직접 해시를 계산한 값과 한번 더 비교
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const addBlock = (candidateBlock: Block): void => {
+  if (isBlockValid(candidateBlock, getLatestBlock())) {
+    // 현재 블록과 제일 최근 블록을 가져와서 isBlockValid를 시킨다.
+    blockchain.push(candidateBlock); // true라면 블록체인에 추가 시킨다.
   }
 };
