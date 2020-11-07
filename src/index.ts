@@ -1,12 +1,6 @@
 import * as CryptoJS from 'crypto-js'; // ts에서 import 할때 이렇게 함.
 
 class Block {
-  index: number;
-  hash: string;
-  previousHash: string;
-  data: string;
-  timestamp: number;
-
   static calculateBlockHash = (
     // Block.caculateBlockHash() 를 쓰기 위해선 static이 필수.
     // 여기에 굳이 메서드 형식으로 넣을 필요는 없는데 수업진행상 넣음. (class 바깥에 해줘도 상관x)
@@ -17,6 +11,20 @@ class Block {
   ): string => {
     return CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
   };
+
+  static validateStructure = (aBlock: Block): boolean =>
+    // 들어온 블록의 구조가 유효한지 아닌지 파악하는 메서드
+    typeof aBlock.index === 'number' &&
+    typeof aBlock.hash === 'string' &&
+    typeof aBlock.previousHash === 'string' &&
+    typeof aBlock.data === 'string' &&
+    typeof aBlock.timestamp === 'number';
+
+  index: number;
+  hash: string;
+  previousHash: string;
+  data: string;
+  timestamp: number;
 
   constructor(
     index: number,
@@ -62,4 +70,14 @@ const createNewBlock = (data: string): Block => {
   );
 
   return newBlock;
+};
+
+const isBlockValid = (candidateBlock: Block, previousBlock: Block): boolean => {
+  if (!Block.validateStructure(candidateBlock)) {
+    return false;
+  } else if (previousBlock.index + 1 !== candidateBlock.index) {
+    return false;
+  } else if (previousBlock.hash !== candidateBlock.previousHash) {
+    return false;
+  }
 };
